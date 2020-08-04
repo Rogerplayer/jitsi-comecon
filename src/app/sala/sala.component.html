@@ -1,4 +1,4 @@
-<div id="toolbar">
+<div *ngIf="joinedParticipant" id="toolbar" class="mat-elevation-z8">
     <div class="row">
         <div class="col-md-3">
             COMECON
@@ -8,8 +8,8 @@
         <div class="col-md-3">Próximo: Ensaio Artes</div>
     </div>
 </div>
-<div id="comecon">
-    <div id="card" *ngIf="joinedParticipant">
+<div *ngIf="joinedParticipant" id="comecon" class="mat-elevation-z8">
+    <div id="card">
         <div id="menu-header">
             {{joinedParticipant?.roomName}} <img src="https://cloud.dmcontagem.com.br/logo-dm.png" alt="">
         </div>
@@ -32,7 +32,7 @@
                         <button mat-raised-button color="primary" class="btn-block">Chamar Apoio</button>
                     </mat-list-item>
                     <mat-list-item>
-                        <button mat-raised-button color="primary" class="btn-block">Chamar Geral</button>
+                        <button mat-raised-button color="primary" class="btn-block" (click)="this.callGeral()">Chamar Geral</button>
                     </mat-list-item>
                 </mat-list>
             </div>

@@ -11,7 +11,8 @@ export class SalaComponent implements OnInit {
 
   private sala: string;
   private jitsi: any;
-  private idealResolution = 360;
+  private idealWidthResolution = 640;
+  private idealHeightResolution = 360;
 
   joinedParticipant: any = null;
 
@@ -22,13 +23,18 @@ export class SalaComponent implements OnInit {
       enableTalkWhileMuted: false,
       enableNoisyMicDetection: false,
       disableInviteFunctions: true,
-      resolution: this.idealResolution,
+      resolution: this.idealWidthResolution,
       debug: false,
       constraints: {
         video: {
-          height: {
-            ideal: this.idealResolution,
+          width: {
+            ideal: this.idealWidthResolution,
             max: 640,
+            min: 120
+          },
+          height: {
+            ideal: this.idealHeightResolution,
+            max: 360,
             min: 120
           }
         }
@@ -65,10 +71,16 @@ export class SalaComponent implements OnInit {
     // this.jitsi.executeCommand('setVideoQuality', 360);
   }
 
+  callGeral(){    
+    this.jitsi.dispose();
+    this.options.roomName = "Geral"
+    this.jitsi = new (window as any).JitsiMeetExternalAPI('meet.jit.si', this.options);   
+  }
+
   executeCommands() {
-    this.jitsi.executeCommand('setVideoQuality', this.idealResolution);
+    this.jitsi.executeCommand('setVideoQuality', this.idealHeightResolution);
     this.jitsi.executeCommand('displayName', 'Rogério');
-    this.jitsi.executeCommand('subject', 'Salão de Luz')
+    this.jitsi.executeCommand('subject', 'Salão de Luz');    
   }
 
 }

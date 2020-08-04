@@ -6,7 +6,8 @@ html, body, #jitsi{
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;    
+    overflow: hidden;
+    background-color: #111;
 }
 
 iframe{
@@ -15,7 +16,7 @@ iframe{
 }
 
 #jitsi{
-    
+    height: 98.5%;
 }
 
 #comecon{
@@ -72,10 +73,11 @@ iframe{
 }
 
 #toolbar{
+    bottom: 0;
     width: 100%;
     position: fixed;
-    height: 25px;
-    line-height: 25px;
+    height: 20px;
+    line-height: 20px;
     text-align: center;
     background-color: blueviolet;
     color: white;
