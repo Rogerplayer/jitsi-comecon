@@ -42,13 +42,32 @@ export class SalaComponent implements OnInit {
     },
     interfaceConfigOverwrite: {
       DEFAULT_BACKGROUND: '#111',
+      DEFAULT_LOCAL_DISPLAY_NAME: 'eu',
       DEFAULT_REMOTE_DISPLAY_NAME: 'Confraternista',
       DISABLE_VIDEO_BACKGROUND: true,
       HIDE_INVITE_MORE_HEADER: true,
       DISPLAY_WELCOME_PAGE_CONTENT: false,
       DISPLAY_WELCOME_PAGE_TOOLBAR_ADDITIONAL_CONTENT: false,
-      ENABLE_FEEDBACK_ANIMATION: false,
       SHOW_CHROME_EXTENSION_BANNER: false,
+      TOOLBAR_BUTTONS: [
+        'microphone', 'camera', 'closedcaptions',
+        // 'desktop',
+        'embedmeeting',
+        // 'fullscreen',
+        'fodeviceselection', 'hangup', 'profile', 'chat',
+        // 'recording',
+        // 'livestreaming',
+        'etherpad',
+        // 'sharedvideo',
+        'settings', 'raisehand',
+        'videoquality', 'filmstrip',
+        // 'invite', 
+        'feedback', 'stats', 'shortcuts',
+        'tileview',
+        // 'videobackgroundblur',
+        'download', 'help', 'mute-everyone',
+        // 'security'
+      ],
     }
   };
 
@@ -59,10 +78,8 @@ export class SalaComponent implements OnInit {
 
   ngOnInit() {
     this.sala = this.route.snapshot.params['sala'];
-    if (this.sala) { this.options.roomName = this.sala }
     this.options.parentNode = document.querySelector('#jitsi'); // Setting parentNode option on init after the DOM has rendered
-    this.jitsi = new (window as any).JitsiMeetExternalAPI('meet.jit.si', this.options);
-    this.jitsi.addEventListener('videoConferenceJoined', this.videoConferenceJoined);
+    this.startCall(this.sala);
     this.executeCommands();
   }
 
@@ -71,16 +88,21 @@ export class SalaComponent implements OnInit {
     // this.jitsi.executeCommand('setVideoQuality', 360);
   }
 
-  callGeral(){    
-    this.jitsi.dispose();
-    this.options.roomName = "Geral"
-    this.jitsi = new (window as any).JitsiMeetExternalAPI('meet.jit.si', this.options);   
+  startCall(sala: string) {
+    if (this.joinedParticipant) { this.jitsi.dispose(); }
+    if (sala) { this.options.roomName = sala }
+    this.jitsi = new (window as any).JitsiMeetExternalAPI('meet.jit.si', this.options);
+    this.jitsi.addEventListener('videoConferenceJoined', this.videoConferenceJoined);
+  }
+
+  callGeral() {
+    this.startCall("Geral");
   }
 
   executeCommands() {
     this.jitsi.executeCommand('setVideoQuality', this.idealHeightResolution);
     this.jitsi.executeCommand('displayName', 'Rogério');
-    this.jitsi.executeCommand('subject', 'Salão de Luz');    
+    this.jitsi.executeCommand('subject', 'Salão de Luz');
   }
 
 }
